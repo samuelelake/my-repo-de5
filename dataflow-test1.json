@@ -1,4 +1,4 @@
-{
+{ 
   "name": "mqtt-combined-signals-fabric",
   "dataflowProfileName": "default",
   "properties": {
