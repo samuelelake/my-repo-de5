@@ -1,0 +1,72 @@
+{
+  "name": "mqtt-combined-signals-fabric",
+  "dataflowProfileName": "default",
+  "properties": {
+    "mode": "Enabled",
+    "requestDiskPersistence": "Disabled",
+    "operations": [
+      {
+        "operationType": "Source",
+        "sourceSettings": {
+          "endpointRef": "default",
+          "serializationFormat": "Json",
+          "dataSources": [
+            "gripple/#"
+          ]
+        },
+        "destinationSettings": null
+      },
+      {
+        "operationType": "BuiltInTransformation",
+        "sourceSettings": null,
+        "destinationSettings": null,
+        "builtInTransformationSettings": {
+          "serializationFormat": "Json",
+          "datasets": [],
+          "filter": [],
+          "map": [
+            {
+              "type": "PassThrough",
+              "inputs": [
+                "*"
+              ],
+              "output": "*"
+            },
+            {
+              "type": "Compute",
+              "description": "Asset",
+              "inputs": [
+                "$metadata.topic"
+              ],
+              "expression": "$1",
+              "output": "asset"
+            },
+            {
+              "type": "Compute",
+              "description": "Message Value",
+              "inputs": [
+                "oeepartcount.Value"
+              ],
+              "expression": "$1",
+              "output": "oeepartcount"
+            }
+          ]
+        }
+      },
+      {
+        "operationType": "Destination",
+        "sourceSettings": null,
+        "destinationSettings": {
+          "endpointRef": "iotops-eventstream-combined",
+          "dataDestination": "es_b92985c8-078f-4f2c-8a4e-df547b90eb48"
+        }
+      }
+    ],
+    "provisioningState": "Accepted"
+  },
+  "type": "microsoft.iotoperations/instances/dataflowprofiles/dataflows",
+  "extendedLocation": {
+    "name": "/subscriptions/017815e9-7831-43c3-9c50-c852d60246b3/resourceGroups/rg-azureiotops-prod/providers/Microsoft.ExtendedLocation/customLocations/vm-azriotops-prod-uks-001-k3s-cl-5136",
+    "type": "CustomLocation"
+  }
+}
